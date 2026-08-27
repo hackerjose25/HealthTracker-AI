@@ -1,16 +1,80 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { LogOut, ShieldAlert } from 'lucide-react';
 import { useHealth } from '@/src/context/HealthContext';
 
 export function DashboardLayout({ children }) {
-  const { user, patient, logout } = useHealth();
+  const { user, authInitialized, patient, logout } = useHealth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (authInitialized && !user) {
+      router.push('/login');
+    }
+  }, [authInitialized, user, router]);
+
+  if (!authInitialized) {
+    return (
+      <div style={{
+        minHeight: '100vh',
+        background: 'var(--ink-deep)',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'var(--text-light)',
+        fontFamily: 'IBM Plex Mono, monospace',
+        gap: 20,
+        padding: 24,
+      }}>
+        {/* Heart/Lifeline Trace Pulse */}
+        <div style={{ position: 'relative', width: 64, height: 64, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <div style={{
+            position: 'absolute',
+            width: '100%',
+            height: '100%',
+            borderRadius: '50%',
+            border: '2px solid var(--mint)',
+            animation: 'ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+            opacity: 0.75,
+          }} />
+          <div style={{
+            width: 48,
+            height: 48,
+            borderRadius: '50%',
+            background: 'rgba(127, 231, 196, 0.1)',
+            border: '2px solid var(--mint)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            margin: 'auto',
+          }}>
+            <ShieldAlert size={20} style={{ color: 'var(--mint)' }} />
+          </div>
+        </div>
+        <div style={{ textAlign: 'center' }}>
+          <h3 style={{ fontSize: 14, fontWeight: 500, color: 'var(--text-light)', margin: '0 0 8px 0', letterSpacing: '0.05em' }}>
+            SECURING CONNECTION
+          </h3>
+          <p style={{ fontSize: 12, color: 'var(--text-muted)', margin: 0 }}>
+            Initializing Encrypted Patient Session...
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // If we are authenticated, but the redirect hasn't processed yet, render nothing
+  if (!user) {
+    return null;
+  }
 
   return (
     <div className="dash-shell" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--ink-deep)' }}>
-      {/* TOP FULL-WIDTH HEADER WITHOUT STEP PILLS */}
+      {/* TOP FULL-WIDTH HEADER */}
       <header
         style={{
           height: 72,
@@ -41,10 +105,19 @@ export function DashboardLayout({ children }) {
         {/* USER PROFILE & LOGOUT */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 13, color: 'var(--text-light)' }}>
-            <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--mint)', color: 'var(--ink-deep)', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>
-              {patient.name.charAt(0)}
-            </div>
-            <span>{patient.name}</span>
+            {user.picture ? (
+              <img
+                src={user.picture}
+                alt={user.name}
+                referrerPolicy="no-referrer"
+                style={{ width: 28, height: 28, borderRadius: '50%', objectFit: 'cover', border: '1px solid var(--mint)' }}
+              />
+            ) : (
+              <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--mint)', color: 'var(--ink-deep)', fontWeight: 600, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12 }}>
+                {(user.name || patient.name).charAt(0)}
+              </div>
+            )}
+            <span>{user.name || patient.name}</span>
           </div>
 
           {user && (

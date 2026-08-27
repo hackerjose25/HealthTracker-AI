@@ -6,11 +6,8 @@ import { INITIAL_PATIENT, INITIAL_DOCUMENTS, DISEASE_PREDICTIONS, PIPELINE_STEPS
 const HealthContext = createContext();
 
 export function HealthProvider({ children }) {
-  const [user, setUser] = useState({
-    name: "YUGIN SANTHOSH",
-    email: "yuginsanthosh1263@gmail.com",
-    isLoggedIn: true,
-  });
+  const [user, setUser] = useState(null);
+  const [authInitialized, setAuthInitialized] = useState(false);
 
   const [patient, setPatient] = useState(INITIAL_PATIENT);
   const [documents, setDocuments] = useState(INITIAL_DOCUMENTS);
@@ -19,16 +16,60 @@ export function HealthProvider({ children }) {
   const [storagePreference, setStoragePreference] = useState('cloud'); // 'local' or 'cloud'
   const [isAnalyzing, setIsAnalyzing] = useState(false);
 
+  // Load user from localStorage on client-side mount
+  React.useEffect(() => {
+    const stored = localStorage.getItem('ht_user');
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setUser(parsed);
+        if (parsed.name) {
+          setPatient((prev) => ({
+            ...prev,
+            name: parsed.name.toUpperCase(),
+          }));
+        }
+      } catch (err) {
+        console.error('Failed to parse stored user:', err);
+      }
+    }
+    setAuthInitialized(true);
+  }, []);
+
   const login = (email, password) => {
-    setUser({
-      name: email.split('@')[0].replace('.', ' '),
+    const name = email.split('@')[0].replace(/\./g, ' ');
+    const formattedName = name.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    const newUser = {
+      name: formattedName,
       email: email,
       isLoggedIn: true,
-    });
+    };
+    setUser(newUser);
+    localStorage.setItem('ht_user', JSON.stringify(newUser));
+    setPatient((prev) => ({
+      ...prev,
+      name: formattedName.toUpperCase(),
+    }));
+  };
+
+  const loginWithGoogle = (googleUser) => {
+    const newUser = {
+      name: googleUser.name,
+      email: googleUser.email,
+      picture: googleUser.picture,
+      isLoggedIn: true,
+    };
+    setUser(newUser);
+    localStorage.setItem('ht_user', JSON.stringify(newUser));
+    setPatient((prev) => ({
+      ...prev,
+      name: googleUser.name.toUpperCase(),
+    }));
   };
 
   const logout = () => {
     setUser(null);
+    localStorage.removeItem('ht_user');
   };
 
   const addDocument = (newDoc) => {
@@ -82,6 +123,7 @@ export function HealthProvider({ children }) {
     <HealthContext.Provider
       value={{
         user,
+        authInitialized,
         patient,
         documents,
         predictions,
@@ -90,6 +132,7 @@ export function HealthProvider({ children }) {
         isAnalyzing,
         setStoragePreference,
         login,
+        loginWithGoogle,
         logout,
         addDocument,
         deleteDocument,
