@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from "react";
-import { Database, Brain, Activity, Lock, ShieldCheck, ArrowRight, Check, FileStack, Sparkles, MessageSquare, AlertCircle, TrendingUp, CheckCircle2 } from "lucide-react";
+import { Database, Brain, Activity, Lock, ShieldCheck, ArrowRight, Check, FileStack, Sparkles, MessageSquare, AlertCircle, TrendingUp, CheckCircle2, ChevronDown } from "lucide-react";
 
 function useReveal() {
   const ref = useRef(null);
@@ -97,6 +97,182 @@ function MagneticButton({ children, className, href, onClick, type = "button" })
   );
 }
 
+function TabShowcase() {
+  const [activeTab, setActiveTab] = useState("timeline");
+
+  const tabs = [
+    {
+      id: "timeline",
+      label: "Timeline View",
+      title: "Your entire medical history, chronologically indexed",
+      desc: "Every blood report, MRI scan, and prescription dated and linked. Easily visualize your patient journey without searching through old emails or folders.",
+      widget: (
+        <div className="cx-widget-card showcase-widget">
+          <div className="cx-widget-header">
+            <span>TIMELINE INDEX</span>
+            <span style={{ color: "var(--mint)" }}>34 RECORDS CONNECTED</span>
+          </div>
+          <div className="cx-widget-timeline-item">
+            <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ color: "var(--text-light)", fontWeight: 500 }}>Comprehensive Blood Panel</div>
+              <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Oct 14, 2021 • LabCorp</div>
+            </div>
+            <span style={{ fontSize: 11, background: "rgba(127,231,196,0.1)", color: "var(--mint)", padding: "2px 8px", borderRadius: 4 }}>Linked</span>
+          </div>
+          <div className="cx-widget-timeline-item">
+            <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ color: "var(--text-light)", fontWeight: 500 }}>MRI Lumbar Spine</div>
+              <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Mar 02, 2023 • Mayo Clinic</div>
+            </div>
+            <span style={{ fontSize: 11, background: "rgba(127,231,196,0.1)", color: "var(--mint)", padding: "2px 8px", borderRadius: 4 }}>Linked</span>
+          </div>
+          <div className="cx-widget-timeline-item">
+            <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
+            <div style={{ flex: 1 }}>
+              <div style={{ color: "var(--text-light)", fontWeight: 500 }}>Cardiac Stress Echocardiogram</div>
+              <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Jan 19, 2025 • Stanford Health</div>
+            </div>
+            <span style={{ fontSize: 11, background: "rgba(228,87,46,0.15)", color: "var(--coral)", padding: "2px 8px", borderRadius: 4 }}>New Record</span>
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "analysis",
+      label: "AI Analysis",
+      title: "Ask medical-domain AI across multiple documents",
+      desc: "Connect the dots. Ask things like 'Did my cholesterol increase from 2021 to 2024?' and let our clinical-grade AI compare and analyze trends over time.",
+      widget: (
+        <div className="cx-widget-card showcase-widget">
+          <div className="cx-widget-header">
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><MessageSquare size={13} /> ASSISTANT CHAT</span>
+            <span style={{ color: "var(--mint)" }}>MULTI-DOC READ</span>
+          </div>
+          <div className="cx-widget-chat-bubble user">
+            "Compare my 2021 blood work with my 2024 panel — did my HbA1c change?"
+          </div>
+          <div className="cx-widget-chat-bubble">
+            <div style={{ fontSize: 11, color: "var(--mint)", marginBottom: 4, fontWeight: 600 }}>Health Tracker AI</div>
+            Your HbA1c improved from <strong>5.9% (2021)</strong> to <strong>5.4% (2024)</strong>, moving out of pre-diabetic range following your prescribed dietary adjustments.
+          </div>
+        </div>
+      )
+    },
+    {
+      id: "forecast",
+      label: "Risk Forecast",
+      title: "Predictive health intelligence over a 5-year horizon",
+      desc: "Health Tracker AI continuously evaluates your trajectory. Identify potential risks before they turn into diagnoses and receive proactive preventive strategies.",
+      widget: (
+        <div className="cx-widget-card showcase-widget">
+          <div className="cx-widget-header">
+            <span style={{ display: "flex", alignItems: "center", gap: 6 }}><TrendingUp size={13} style={{ color: "var(--mint)" }} /> FORECAST MODEL</span>
+            <span style={{ color: "var(--mint)" }}>5-YEAR HORIZON</span>
+          </div>
+          <div className="cx-widget-risk-meter">
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6 }}>
+                <span style={{ color: "var(--text-light)" }}>Cardiovascular Risk Profile</span>
+                <span style={{ color: "var(--mint)", fontWeight: 600 }}>Optimal • Low (8%)</span>
+              </div>
+              <div className="cx-risk-bar-track">
+                <div className="cx-risk-bar-fill" style={{ width: "12%", background: "var(--mint)" }} />
+              </div>
+            </div>
+            <div>
+              <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6 }}>
+                <span style={{ color: "var(--text-light)" }}>Metabolic Trend Stability</span>
+                <span style={{ color: "var(--mint)", fontWeight: 600 }}>94% Positive</span>
+              </div>
+              <div className="cx-risk-bar-track">
+                <div className="cx-risk-bar-fill" style={{ width: "94%", background: "linear-gradient(90deg, var(--mint), #52c29d)" }} />
+              </div>
+            </div>
+            <div style={{ fontSize: 12.5, color: "var(--text-muted)", marginTop: 4, background: "rgba(14, 34, 48, 0.6)", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(30, 61, 75, 0.6)" }}>
+              💡 Recommended action: Schedule routine 2-year lipid panel screening in Q3 2026.
+            </div>
+          </div>
+        </div>
+      )
+    }
+  ];
+
+  const currentTab = tabs.find(t => t.id === activeTab);
+
+  return (
+    <div className="cx-showcase">
+      <div className="cx-showcase-tabs">
+        {tabs.map(t => (
+          <button
+            key={t.id}
+            className={`cx-showcase-tab ${activeTab === t.id ? "active" : ""}`}
+            onClick={() => setActiveTab(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div className="cx-showcase-content">
+        <div className="cx-showcase-text">
+          <h3>{currentTab.title}</h3>
+          <p>{currentTab.desc}</p>
+        </div>
+        <div className="cx-showcase-visual">
+          {currentTab.widget}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FAQAccordion() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const faqs = [
+    {
+      q: "How does Health Tracker AI read scanned or handwritten documents?",
+      a: "Health Tracker AI uses advanced OCR (Optical Character Recognition) paired with medical-domain LLMs. It interprets handwriting, scans, lab results, and complex tables, translating medical jargon into plain English."
+    },
+    {
+      q: "Is my medical data safe and private?",
+      a: "Absolutely. Security is our foundation. You can store your records 100% locally on your device with no cloud uploads, or choose to sync with end-to-end encryption (AES-256) backed by secure cloud vaults."
+    },
+    {
+      q: "Do I need to pay to get started?",
+      a: "No, Health Tracker AI offers a free tier that lets you upload up to 20 files to organize, synthesize, and search your timeline. Premium plans are available for extensive medical histories."
+    },
+    {
+      q: "Can I share my medical timeline with my doctor?",
+      a: "Yes. You can generate a temporary secure link or a local QR code. Doctors can scan it to view your structured timeline, key findings, and summary graphs instantly without installing the app."
+    },
+    {
+      q: "Is this app a substitute for professional medical advice?",
+      a: "No. Health Tracker AI is a personal health record organizer and information tool. It is designed to help you prepare for physician visits and identify historical trends, but never to diagnose or treat conditions."
+    }
+  ];
+
+  return (
+    <div className="cx-faq-accordion">
+      {faqs.map((faq, i) => {
+        const isOpen = openIndex === i;
+        return (
+          <div key={i} className={`cx-faq-item ${isOpen ? "open" : ""}`}>
+            <button className="cx-faq-trigger" onClick={() => setOpenIndex(isOpen ? null : i)}>
+              <span>{faq.q}</span>
+              <ChevronDown size={18} className="cx-faq-chevron" />
+            </button>
+            <div className="cx-faq-content" style={{ maxHeight: isOpen ? "200px" : "0" }}>
+              <p>{faq.a}</p>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function LandingPage() {
   const [tab, setTab] = useState("device");
   const [email, setEmail] = useState("");
@@ -140,7 +316,7 @@ export default function LandingPage() {
 
       <nav className={`cx-nav ${navScrolled ? "scrolled" : ""}`}>
         <div className="cx-nav-inner">
-          <div className="cx-logo"><span className="cx-logo-mark" />Continuum</div>
+          <div className="cx-logo"><span className="cx-logo-mark" />Health Tracker AI</div>
           <div className="cx-nav-links">
             <a href="#product">Product</a>
             <a href="#how">How it works</a>
@@ -156,7 +332,7 @@ export default function LandingPage() {
           <div className="cx-eyebrow"><span className="dot" />AI-integrated health records, from birth onward</div>
           <h1>Every record you've ever had, read as <em>one</em> story.</h1>
           <p className="lede">
-            Continuum stores your medical history in one timeline, then uses medical-domain AI to connect the dots
+            Health Tracker AI stores your medical history in one timeline, then uses medical-domain AI to connect the dots
             across reports, prescriptions, and scans — so it can flag risks no single document ever could.
           </p>
           <div className="cx-hero-ctas">
@@ -172,180 +348,203 @@ export default function LandingPage() {
         <div className="wrap">
           <Reveal>
             <div className="cx-kicker">The Problem</div>
-            <h2>Your health data has always lived in pieces.</h2>
-            <p className="sub">One app stores your prescriptions. Another summarizes a single lab report. None of them
-              read your history as a whole — so nothing warns you before small findings become a real risk.</p>
+            <h2>Your health history is scattered across portals, PDFs, and paper files.</h2>
+            <p className="sub">
+              One clinic has your blood work. Another has your MRI scan. Because these documents are isolated,
+              critical health trends go unnoticed until they become symptoms.
+            </p>
           </Reveal>
-          <div className="cx-compare">
+          
+          <div className="cx-problem-split">
             <Reveal>
-              <div className="cx-compare-card">
+              <div className="cx-compare-card problem-before">
                 <div className="cx-compare-title">
-                  <span>Scattered, today</span>
+                  <span>Cryptic & Scattered Files</span>
                   <AlertCircle size={16} style={{ color: "var(--coral)" }} />
                 </div>
-                <div className="cx-scatter">
-                  <span className="cx-chip" style={{ "--r": "-3deg", "--d": "0s" }}>Lab PDF, 2019</span>
-                  <span className="cx-chip" style={{ "--r": "2deg", "--d": ".3s" }}>X-ray, phone gallery</span>
-                  <span className="cx-chip" style={{ "--r": "-1deg", "--d": ".6s" }}>Prescription photo</span>
-                  <span className="cx-chip" style={{ "--r": "4deg", "--d": ".9s" }}>MRI report, folder A</span>
-                  <span className="cx-chip" style={{ "--r": "-2deg", "--d": "1.2s" }}>Discharge summary</span>
-                  <span className="cx-chip" style={{ "--r": "1deg", "--d": "1.5s" }}>Blood work, email</span>
+                <div className="cx-files-list">
+                  <div className="cx-file-item error">
+                    <span className="cx-file-icon">📄</span>
+                    <span className="cx-file-name">scan_9023_final_copy.pdf</span>
+                    <span className="cx-file-meta">Unknown date</span>
+                  </div>
+                  <div className="cx-file-item error">
+                    <span className="cx-file-icon">📄</span>
+                    <span className="cx-file-name">IMG_29841.jpg</span>
+                    <span className="cx-file-meta">Photo gallery</span>
+                  </div>
+                  <div className="cx-file-item error">
+                    <span className="cx-file-icon">📄</span>
+                    <span className="cx-file-name">blood_report_2021_rev3.pdf</span>
+                    <span className="cx-file-meta">Email attachment</span>
+                  </div>
                 </div>
-                <p className="cx-compare-note">Isolated documents — no cross-examination or historical continuity.</p>
+                <p className="cx-compare-note">Isolated data — no timeline, no trends, no context.</p>
               </div>
             </Reveal>
+            
             <Reveal delay={100}>
-              <div className="cx-compare-card now">
+              <div className="cx-compare-card now problem-after">
                 <div className="cx-compare-title">
-                  <span>One thread, with Continuum</span>
+                  <span>Organized by Health Tracker AI</span>
                   <Sparkles size={16} style={{ color: "var(--mint)" }} />
                 </div>
-                <div className="cx-thread-row">
-                  <div className="cx-thread-node"><FileStack /></div>
-                  <div className="cx-thread-line" />
-                  <div className="cx-thread-node"><Activity /></div>
-                  <div className="cx-thread-line" />
-                  <div className="cx-thread-node"><Brain /></div>
-                  <div className="cx-thread-line" />
-                  <div className="cx-thread-node"><ShieldCheck /></div>
+                <div className="cx-files-list">
+                  <div className="cx-file-item success">
+                    <span className="cx-file-icon">🩺</span>
+                    <span className="cx-file-name">Mayo Clinic / Lumbar Spine MRI</span>
+                    <span className="cx-file-meta">Mar 02, 2023</span>
+                  </div>
+                  <div className="cx-file-item success">
+                    <span className="cx-file-icon">🧪</span>
+                    <span className="cx-file-name">LabCorp / Comprehensive Blood Panel</span>
+                    <span className="cx-file-meta">Oct 14, 2021</span>
+                  </div>
+                  <div className="cx-file-item success">
+                    <span className="cx-file-icon">💊</span>
+                    <span className="cx-file-name">Stanford Health / Cardiac Stress Report</span>
+                    <span className="cx-file-meta">Jan 19, 2025</span>
+                  </div>
                 </div>
-                <p className="cx-compare-note">Every record dated, indexed, and analyzed together in one continuous timeline.</p>
+                <p className="cx-compare-note">Chronological health history organized as a single continuous story.</p>
               </div>
             </Reveal>
           </div>
         </div>
       </section>
 
+      {/* SHOWCASE SECTION */}
+      <section className="cx-section dim">
+        <div className="wrap">
+          <Reveal>
+            <div className="cx-kicker">Interactive Showcase</div>
+            <h2 className="center">Explore the core platform capabilities</h2>
+            <p className="sub center">Switch between views to see how Health Tracker AI interprets your clinical journey.</p>
+          </Reveal>
+          <Reveal delay={100}>
+            <TabShowcase />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section className="cx-stats-bar">
+        <div className="wrap cx-stats-grid">
+          <div className="cx-stat-item">
+            <div className="cx-stat-val">73%</div>
+            <div className="cx-stat-lbl">of critical health patterns span multiple documents</div>
+          </div>
+          <div className="cx-stat-item">
+            <div className="cx-stat-val">5 min</div>
+            <div className="cx-stat-lbl">average time to digitize 10+ years of records</div>
+          </div>
+          <div className="cx-stat-item">
+            <div className="cx-stat-val">100%</div>
+            <div className="cx-stat-lbl">on-device storage option — offline & fully private</div>
+          </div>
+        </div>
+      </section>
+
       {/* HOW IT WORKS SECTION */}
-      <section className="cx-section dim" id="how">
+      <section className="cx-section" id="how">
         <div className="wrap">
           <Reveal>
             <div className="cx-kicker">How It Works</div>
-            <h2>Store it. Understand it. See what's ahead.</h2>
-            <p className="sub">Three integrated layers working continuously along your lifetime health story.</p>
+            <h2>Three steps to permanent health clarity.</h2>
+            <p className="sub">Our AI workflow simplifies record organization, analysis, and early warnings.</p>
           </Reveal>
-
-          <div className="cx-features">
-            {/* FEATURE 1 */}
+          
+          <div className="cx-steps-timeline">
+            <div className="cx-timeline-line" />
+            
             <Reveal>
-              <div className="cx-feature-card">
-                <div>
-                  <div className="cx-feature-badge"><Database size={14} /> Layer 01 • Lifetime Vault</div>
-                  <h3>Store every record, dated & organized</h3>
-                  <p>Diagnostic reports, prescriptions, scans, and procedure notes, arranged chronologically from birth onward. Keep everything local on your device, or sync with zero-knowledge encrypted cloud backup.</p>
-                  <div className="cx-feature-tags">
-                    <span className="cx-feature-tag">On-Device or Cloud</span>
-                    <span className="cx-feature-tag">Supabase Encrypted</span>
-                    <span className="cx-feature-tag">Timestamped Index</span>
-                  </div>
-                </div>
-
-                <div className="cx-widget-card">
-                  <div className="cx-widget-header">
-                    <span>TIMELINE INDEX</span>
-                    <span style={{ color: "var(--mint)" }}>34 RECORDS CONNECTED</span>
-                  </div>
-                  <div className="cx-widget-timeline-item">
-                    <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ color: "var(--text-light)", fontWeight: 500 }}>Comprehensive Blood Panel</div>
-                      <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Oct 14, 2021 • LabCorp</div>
-                    </div>
-                    <span style={{ fontSize: 11, background: "rgba(127,231,196,0.1)", color: "var(--mint)", padding: "2px 8px", borderRadius: 4 }}>Linked</span>
-                  </div>
-                  <div className="cx-widget-timeline-item">
-                    <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ color: "var(--text-light)", fontWeight: 500 }}>MRI Lumbar Spine</div>
-                      <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Mar 02, 2023 • Mayo Clinic</div>
-                    </div>
-                    <span style={{ fontSize: 11, background: "rgba(127,231,196,0.1)", color: "var(--mint)", padding: "2px 8px", borderRadius: 4 }}>Linked</span>
-                  </div>
-                  <div className="cx-widget-timeline-item">
-                    <CheckCircle2 size={16} style={{ color: "var(--mint)" }} />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ color: "var(--text-light)", fontWeight: 500 }}>Cardiac Stress Echocardiogram</div>
-                      <div style={{ fontSize: 12, color: "var(--text-muted)" }}>Jan 19, 2025 • Stanford Health</div>
-                    </div>
-                    <span style={{ fontSize: 11, background: "rgba(228,87,46,0.15)", color: "var(--coral)", padding: "2px 8px", borderRadius: 4 }}>New Record</span>
-                  </div>
+              <div className="cx-step-item">
+                <div className="cx-step-num">01</div>
+                <div className="cx-step-text">
+                  <h3>Upload any health document</h3>
+                  <p>Drag in PDFs, snap photos of prescriptions, or upload lab reports. Health Tracker AI automatically parses the clinical text, dates the record, and adds it to your timeline.</p>
                 </div>
               </div>
             </Reveal>
-
-            {/* FEATURE 2 */}
+            
             <Reveal delay={100}>
-              <div className="cx-feature-card">
-                <div>
-                  <div className="cx-feature-badge"><Brain size={14} /> Layer 02 • Clinical AI Synthesis</div>
-                  <h3>Ask questions across your whole history</h3>
-                  <p>Point the assistant at two, five, or all of your historical documents. Ask complex multi-year questions in plain language and receive precise, clinical-grade comparative analysis.</p>
-                  <div className="cx-feature-tags">
-                    <span className="cx-feature-tag">Multi-Document RAG</span>
-                    <span className="cx-feature-tag">MedGemma & Med42 AI</span>
-                    <span className="cx-feature-tag">Plain-Language Answers</span>
-                  </div>
-                </div>
-
-                <div className="cx-widget-card">
-                  <div className="cx-widget-header">
-                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}><MessageSquare size={13} /> ASSISTANT CHAT</span>
-                    <span style={{ color: "var(--mint)" }}>MULTI-DOC READ</span>
-                  </div>
-                  <div className="cx-widget-chat-bubble user">
-                    "Compare my 2021 blood work with my 2024 panel — did my HbA1c change?"
-                  </div>
-                  <div className="cx-widget-chat-bubble">
-                    <div style={{ fontSize: 11, color: "var(--mint)", marginBottom: 4, fontWeight: 600 }}>Continuum Clinical AI</div>
-                    Your HbA1c improved from <strong>5.9% (2021)</strong> to <strong>5.4% (2024)</strong>, moving out of pre-diabetic range following your prescribed dietary adjustments.
-                  </div>
+              <div className="cx-step-item">
+                <div className="cx-step-num">02</div>
+                <div className="cx-step-text">
+                  <h3>AI reads and synthesizes your history</h3>
+                  <p>Our medical-domain LLM compares old and new data. It highlights changes, translates confusing clinical terms, and cross-references multiple reports to spot trendlines.</p>
                 </div>
               </div>
             </Reveal>
-
-            {/* FEATURE 3 */}
+            
             <Reveal delay={200}>
-              <div className="cx-feature-card">
-                <div>
-                  <div className="cx-feature-badge"><Activity size={14} /> Layer 03 • Predictive Health Intelligence</div>
-                  <h3>See risk before it becomes a diagnosis</h3>
-                  <p>On a regular automated schedule, Continuum evaluates your multi-year trajectory to estimate emerging health risks — providing early warning indicators and proactive preventive guidance.</p>
-                  <div className="cx-feature-tags">
-                    <span className="cx-feature-tag">Risk Forecasting</span>
-                    <span className="cx-feature-tag">Longitudinal ML</span>
-                    <span className="cx-feature-tag">Actionable Protocols</span>
-                  </div>
+              <div className="cx-step-item">
+                <div className="cx-step-num">03</div>
+                <div className="cx-step-text">
+                  <h3>Receive active health insights</h3>
+                  <p>Get automatic risk assessments and prepare focused questions for your doctor. Health Tracker AI points out anomalies and schedules routine check-up alerts.</p>
                 </div>
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
 
-                <div className="cx-widget-card">
-                  <div className="cx-widget-header">
-                    <span style={{ display: "flex", alignItems: "center", gap: 6 }}><TrendingUp size={13} style={{ color: "var(--mint)" }} /> FORECAST MODEL</span>
-                    <span style={{ color: "var(--mint)" }}>5-YEAR HORIZON</span>
-                  </div>
-                  <div className="cx-widget-risk-meter">
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6 }}>
-                        <span style={{ color: "var(--text-light)" }}>Cardiovascular Risk Profile</span>
-                        <span style={{ color: "var(--mint)", fontWeight: 600 }}>Optimal • Low (8%)</span>
-                      </div>
-                      <div className="cx-risk-bar-track">
-                        <div className="cx-risk-bar-fill" style={{ width: "12%", background: "var(--mint)" }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, marginBottom: 6 }}>
-                        <span style={{ color: "var(--text-light)" }}>Metabolic Trend Stability</span>
-                        <span style={{ color: "var(--mint)", fontWeight: 600 }}>94% Positive</span>
-                      </div>
-                      <div className="cx-risk-bar-track">
-                        <div className="cx-risk-bar-fill" style={{ width: "94%", background: "linear-gradient(90deg, var(--mint), #52c29d)" }} />
-                      </div>
-                    </div>
-                    <div style={{ fontSize: 12.5, color: "var(--text-muted)", marginTop: 4, background: "rgba(14, 34, 48, 0.6)", padding: "10px 12px", borderRadius: 8, border: "1px solid rgba(30, 61, 75, 0.6)" }}>
-                      💡 Recommended action: Schedule routine 2-year lipid panel screening in Q3 2026.
-                    </div>
-                  </div>
-                </div>
+      {/* FEATURE GRID SECTION */}
+      <section className="cx-section dim">
+        <div className="wrap">
+          <Reveal>
+            <div className="cx-kicker">Features</div>
+            <h2>Built for patients, backed by advanced AI</h2>
+            <p className="sub">Every feature is designed to bring visibility and continuity to your medical history.</p>
+          </Reveal>
+          
+          <div className="cx-features-grid">
+            <Reveal>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><Database size={24} /></div>
+                <h3>Lifetime Secure Vault</h3>
+                <p>Store clinical summaries, scans, and notes dated chronologically from birth onward.</p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={50}>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><Brain size={24} /></div>
+                <h3>Medical-Domain AI</h3>
+                <p>Powered by advanced models trained on clinical datasets for high-accuracy summaries.</p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={100}>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><Activity size={24} /></div>
+                <h3>Longitudinal ML</h3>
+                <p>Forecast 5-year risk trends using medical intelligence across different document points.</p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={150}>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><MessageSquare size={24} /></div>
+                <h3>Natural Language Chat</h3>
+                <p>Ask plain-language questions across multiple medical files and get instant comparative insights.</p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={200}>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><Lock size={24} /></div>
+                <h3>Privacy First</h3>
+                <p>Choose 100% on-device local execution or secure end-to-end encrypted cloud synchronization.</p>
+              </div>
+            </Reveal>
+            
+            <Reveal delay={250}>
+              <div className="cx-grid-card">
+                <div className="cx-grid-icon"><Sparkles size={24} /></div>
+                <h3>Doctor-Ready Summaries</h3>
+                <p>Export structured checklists and questions to make physician consultations productive.</p>
               </div>
             </Reveal>
           </div>
@@ -355,30 +554,21 @@ export default function LandingPage() {
       {/* PRIVACY SECTION */}
       <section className="cx-section" id="privacy">
         <div className="wrap">
-          <div className="cx-privacy">
+          <div className="cx-privacy-layout">
             <Reveal>
-              <div>
+              <div className="cx-privacy-info">
                 <div className="cx-kicker">Privacy By Design</div>
-                <h2>Your medical data is yours alone.</h2>
-                <div className="cx-priv-list" style={{ marginTop: 28 }}>
-                  <div className="cx-priv-item">
-                    <Lock />
-                    <div>
-                      <h4>Complete Storage Choice</h4>
-                      <p>Store records 100% locally on your personal device with zero cloud uploads, or opt into end-to-end encrypted cloud sync across devices.</p>
-                    </div>
-                  </div>
-                  <div className="cx-priv-item">
-                    <ShieldCheck />
-                    <div>
-                      <h4>Explicit Action Required</h4>
-                      <p>Records are only read by the AI assistant when explicitly attached to a question — nothing is scanned silently in the background.</p>
-                    </div>
-                  </div>
+                <h2>Your clinical data is yours alone. Period.</h2>
+                <p className="sub" style={{ marginTop: 12 }}>We don't train models on your personal files, and we never sell your health history. Choose where your records reside.</p>
+                
+                <div className="cx-trust-badges">
+                  <div className="cx-badge"><ShieldCheck size={14} /> Zero-Knowledge</div>
+                  <div className="cx-badge"><Lock size={14} /> AES-256 Encrypted</div>
+                  <div className="cx-badge"><Check size={14} /> HIPAA Aligned</div>
                 </div>
               </div>
             </Reveal>
-
+            
             <Reveal delay={100}>
               <div className="cx-toggle-card">
                 <div className="cx-toggle-head">
@@ -398,7 +588,7 @@ export default function LandingPage() {
                     </>
                   ) : (
                     <>
-                      Records are end-to-end encrypted and synced via Supabase PostgreSQL, accessible across all your authorized devices.
+                      Records are end-to-end encrypted and synced via secure vaults, accessible across all your authorized devices.
                       <ul>
                         <li><Check /> Reach your timeline from phone, tablet, or web</li>
                         <li><Check /> AES-256 encryption at rest and TLS 1.3 in transit</li>
@@ -413,32 +603,48 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* FAQ SECTION */}
+      <section className="cx-section dim">
+        <div className="wrap">
+          <Reveal>
+            <div className="cx-kicker" style={{ display: "flex", justifyContent: "center" }}>FAQ</div>
+            <h2 style={{ textAlign: "center", margin: "0 auto" }}>Frequently Asked Questions</h2>
+            <p className="sub" style={{ textAlign: "center", margin: "18px auto 0" }}>Answers to common questions about security, features, and platform usage.</p>
+          </Reveal>
+          <Reveal delay={100}>
+            <FAQAccordion />
+          </Reveal>
+        </div>
+      </section>
+
       {/* WAITLIST CTA SECTION */}
       <section className="cx-cta" id="join">
         <div className="wrap">
           <Reveal>
             <div className="cx-kicker" style={{ justifyContent: "center", display: "flex" }}>Early Access</div>
-            <h2>Be the first to experience Continuum.</h2>
+            <h2>Be the first to experience Health Tracker AI.</h2>
             <p className="sub">We are building the future of personal health intelligence in the open. Request early access below.</p>
-            {!submitted ? (
-              <form className="cx-form" onSubmit={handleSubmit}>
-                <input
-                  className="cx-input"
-                  type="email"
-                  required
-                  placeholder="enter your email address..."
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  aria-label="Email address"
-                />
-                <MagneticButton type="submit" onClick={handleSubmit} className="cx-btn-primary">
-                  Join Waitlist <ArrowRight size={16} />
-                </MagneticButton>
-              </form>
-            ) : (
-              <div className="cx-success"><Check size={18} /> You're on the list — we will reach out soon.</div>
-            )}
-            <p className="cx-form-note">Continuum is in early development. This preview demonstrates upcoming core product capabilities.</p>
+            <div className="cx-cta-container">
+              {!submitted ? (
+                <form className="cx-form" onSubmit={handleSubmit}>
+                  <input
+                    className="cx-input"
+                    type="email"
+                    required
+                    placeholder="enter your email address..."
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    aria-label="Email address"
+                  />
+                  <MagneticButton type="submit" onClick={handleSubmit} className="cx-btn-primary">
+                    Join Waitlist <ArrowRight size={16} />
+                  </MagneticButton>
+                </form>
+              ) : (
+                <div className="cx-success"><Check size={18} /> You're on the list — we will reach out soon.</div>
+              )}
+              <p className="cx-form-note">Health Tracker AI is in early development. This preview demonstrates upcoming core product capabilities.</p>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -448,7 +654,7 @@ export default function LandingPage() {
         <div className="wrap">
           <div className="cx-footer-top">
             <div>
-              <div className="cx-logo" style={{ color: "var(--text-light)" }}><span className="cx-logo-mark" />Continuum</div>
+              <div className="cx-logo" style={{ color: "var(--text-light)" }}><span className="cx-logo-mark" />Health Tracker AI</div>
               <p className="cx-footer-tag">An AI-integrated platform for storing, understanding, and forecasting your lifetime health story.</p>
             </div>
             <div className="cx-footer-cols">
@@ -467,8 +673,8 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="cx-footer-bottom">
-            <span>© 2026 Continuum Inc. All rights reserved.</span>
-            <span className="cx-disclaimer">Continuum is an health information organizer and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified physician.</span>
+            <span>© 2026 Health Tracker AI Inc. All rights reserved.</span>
+            <span className="cx-disclaimer">Health Tracker AI is a health information organizer and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified physician.</span>
           </div>
         </div>
       </footer>

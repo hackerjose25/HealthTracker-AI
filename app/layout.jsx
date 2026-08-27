@@ -1,8 +1,8 @@
 import './globals.css';
 
 export const metadata = {
-  title: 'Continuum — AI-Integrated Health Records Timeline',
-  description: 'Continuum connects all your health records across time, using medical-domain AI to flag risks before they become diagnoses.',
+  title: 'Health Tracker AI — AI-Integrated Health Records Timeline',
+  description: 'Health Tracker AI connects all your health records across time, using medical-domain AI to flag risks before they become diagnoses.',
 };
 
 export default function RootLayout({ children }) {
